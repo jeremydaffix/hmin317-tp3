@@ -114,7 +114,7 @@ private:
     QOpenGLTexture *texture;
     //QImage *heightmap;
 
-    QMatrix4x4 projection;
+    //QMatrix4x4 projection;
 
     QVector2D mousePressPosition;
     QVector3D rotationAxis;
@@ -143,8 +143,8 @@ private:
     // graph de scene
 
 
-    QVector3D cameraPosition = QVector3D(0, 0, -10);
-    QQuaternion cameraRotation = QQuaternion::fromEulerAngles(0, 20, 0);
+    //QVector3D cameraPosition = QVector3D(0, 0, -10);
+    //QQuaternion cameraRotation = QQuaternion::fromEulerAngles(0, 20, 0);
 
     Cube *cube, *cube2;
 };

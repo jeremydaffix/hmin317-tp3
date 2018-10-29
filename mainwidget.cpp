@@ -243,13 +243,17 @@ void MainWidget::initializeGL()
 
 
 
-    cube = new Cube(QVector3D(-3., 0., 0.));
-    cube2 = new Cube(QVector3D(0., 0., 0.));
+    cube = new Cube(QVector3D(-0.5, 0.2, -5.), QQuaternion::fromEulerAngles(0, 0, 0), QVector3D(1.5, 1.5, 1.0));
+    cube2 = new Cube(QVector3D(0.5, 0.2, -5));
 
     GameScene::getInstance()->addChild(cube);
     GameScene::getInstance()->addChild(cube2);
 
     GameScene::getInstance()->CreateGeometry();
+
+
+    GameScene::getInstance()->setPosition(QVector3D(0, 0, -10));
+    GameScene::getInstance()->setRotation(QQuaternion::fromEulerAngles(0, 20, 0));
 }
 
 //! [3]
@@ -313,11 +317,15 @@ void MainWidget::resizeGL(int w, int h)
     ////const qreal zNear = 3.0, zFar = 7.0, fov = 45.0;
     const qreal zNear = 1.0, zFar = 100.0, fov = 45.0;
 
+
     // Reset projection
-    projection.setToIdentity();
+    QMatrix4x4 proj;
+    proj.setToIdentity();
 
     // Set perspective projection
-    projection.perspective(fov, aspect, zNear, zFar);
+    proj.perspective(fov, aspect, zNear, zFar);
+
+    GameScene::getInstance()->setProjection(proj);
 }
 //! [5]
 
@@ -330,14 +338,14 @@ void MainWidget::paintGL()
 
 //! [6]
     // Calculate model view transformation
-    QMatrix4x4 matrix;
+    //QMatrix4x4 matrix;
 
     // position fixe caméra (tp1)
     //matrix.translate(0.0, 0.0, -55.0);
 
     // position au dessus du terrain, modifiable par ZQSD (tp1)
-    matrix.translate(cameraPosition);
-    matrix.rotate(cameraRotation);
+    //matrix.translate(cameraPosition);
+    //matrix.rotate(cameraRotation);
 
      //matrix.lookAt(cameraPosition, QVector3D(0, 0, 0), QVector3D(0.0, 1.0, 0.0));
 
@@ -355,11 +363,11 @@ void MainWidget::paintGL()
 
 
     // Set modelview-projection matrix
-    program.setUniformValue("mvp_matrix", projection * matrix);
+    //program.setUniformValue("mvp_matrix", projection * matrix);
 //! [6]
 
     // Use texture unit 0 which contains cube.png
-    program.setUniformValue("texture", 0);
+    //program.setUniformValue("texture", 0);
 
     // Draw cube geometry
     //geometries->drawCubeGeometry(&program);

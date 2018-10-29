@@ -24,6 +24,9 @@ void GameScene::CreateGeometry()
 
 void GameScene::Draw()
 {
+    // les position / rotation / scale de l'instance de gamescene
+    // sont celles de la "camera"
+
     std::list<GameObject*>::iterator it;
     for (it = children.begin(); it != children.end(); ++it)
     {
@@ -34,6 +37,16 @@ void GameScene::Draw()
 GameScene::GameScene()
 {
 
+}
+
+QMatrix4x4 GameScene::getProjection() const
+{
+    return projection;
+}
+
+void GameScene::setProjection(const QMatrix4x4 &value)
+{
+    projection = value;
 }
 
 QOpenGLShaderProgram *GameScene::getDefaultShader()

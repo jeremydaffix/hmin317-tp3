@@ -15,6 +15,9 @@ public:
     QOpenGLShaderProgram *getDefaultShader();
     void setDefaultShader(QOpenGLShaderProgram *value);
 
+    QMatrix4x4 getProjection() const;
+    void setProjection(const QMatrix4x4 &value);
+
 private:
     GameScene(); // SINGLETON
 
@@ -23,6 +26,8 @@ protected:
 
     QOpenGLShaderProgram* defaultShader;
     static GameScene* instance;
+
+    QMatrix4x4 projection;
 
 };
 
