@@ -6,60 +6,49 @@ Cube::Cube(QVector3D pos, QQuaternion rot, QVector3D sc, QOpenGLShaderProgram* s
 
 }
 
-void Cube::CreateGeometry()
+void Cube::createGeometry()
 {
-    qDebug() << "CREATE CUBE\n";
-
-    //QVector3D sc = getScale();
-
-    //float sx = sc.x() / 2.;
-    //float sy = sc.y() / 2.;
-    //float sz = sc.z() / 2.;
-
-    float sx = 1.;
-    float sy = 1.;
-    float sz = 1.;
-
+    //qDebug() << "CREATE CUBE\n";
 
     // For cube we would need only 8 vertices but we have to
     // duplicate vertex for each face because texture coordinate
     // is different.
     VertexData vertices[] = {
         // Vertex data for face 0
-        {QVector3D(-1.0f * sx, -1.0f * sy,  1.0f * sz), QVector2D(0.0f, 0.0f)},  // v0
-        {QVector3D( 1.0f * sx, -1.0f * sy,  1.0f * sz), QVector2D(0.33f, 0.0f)}, // v1
-        {QVector3D(-1.0f * sx,  1.0f * sy,  1.0f * sz), QVector2D(0.0f, 0.5f)},  // v2
-        {QVector3D( 1.0f * sx,  1.0f * sy,  1.0f * sz), QVector2D(0.33f, 0.5f)}, // v3
+        {QVector3D(-1.0f, -1.0f,  1.0f), QVector2D(0.0f, 0.0f)},  // v0
+        {QVector3D( 1.0f, -1.0f,  1.0f), QVector2D(0.33f, 0.0f)}, // v1
+        {QVector3D(-1.0f,  1.0f,  1.0f), QVector2D(0.0f, 0.5f)},  // v2
+        {QVector3D( 1.0f,  1.0f,  1.0f), QVector2D(0.33f, 0.5f)}, // v3
 
         // Vertex data for face 1
-        {QVector3D( 1.0f * sx, -1.0f * sy,  1.0f * sz), QVector2D( 0.0f, 0.5f)}, // v4
-        {QVector3D( 1.0f * sx, -1.0f * sy, -1.0f * sz), QVector2D(0.33f, 0.5f)}, // v5
-        {QVector3D( 1.0f * sx,  1.0f * sy,  1.0f * sz), QVector2D(0.0f, 1.0f)},  // v6
-        {QVector3D( 1.0f * sx,  1.0f * sy, -1.0f * sz), QVector2D(0.33f, 1.0f)}, // v7
+        {QVector3D( 1.0f, -1.0f,  1.0f), QVector2D( 0.0f, 0.5f)}, // v4
+        {QVector3D( 1.0f, -1.0f, -1.0f), QVector2D(0.33f, 0.5f)}, // v5
+        {QVector3D( 1.0f,  1.0f,  1.0f), QVector2D(0.0f, 1.0f)},  // v6
+        {QVector3D( 1.0f,  1.0f, -1.0f), QVector2D(0.33f, 1.0f)}, // v7
 
         // Vertex data for face 2
-        {QVector3D( 1.0f * sx, -1.0f * sy, -1.0f * sz), QVector2D(0.66f, 0.5f)}, // v8
-        {QVector3D(-1.0f * sx, -1.0f * sy, -1.0f * sz), QVector2D(1.0f, 0.5f)},  // v9
-        {QVector3D( 1.0f * sx,  1.0f * sy, -1.0f * sz), QVector2D(0.66f, 1.0f)}, // v10
-        {QVector3D(-1.0f * sx,  1.0f * sy, -1.0f * sz), QVector2D(1.0f, 1.0f)},  // v11
+        {QVector3D( 1.0f, -1.0f, -1.0f), QVector2D(0.66f, 0.5f)}, // v8
+        {QVector3D(-1.0f, -1.0f, -1.0f), QVector2D(1.0f, 0.5f)},  // v9
+        {QVector3D( 1.0f,  1.0f, -1.0f), QVector2D(0.66f, 1.0f)}, // v10
+        {QVector3D(-1.0f,  1.0f, -1.0f), QVector2D(1.0f, 1.0f)},  // v11
 
         // Vertex data for face 3
-        {QVector3D(-1.0f * sx, -1.0f * sy, -1.0f * sz), QVector2D(0.66f, 0.0f)}, // v12
-        {QVector3D(-1.0f * sx, -1.0f * sy,  1.0f * sz), QVector2D(1.0f, 0.0f)},  // v13
-        {QVector3D(-1.0f * sx,  1.0f * sy, -1.0f * sz), QVector2D(0.66f, 0.5f)}, // v14
-        {QVector3D(-1.0f * sx,  1.0f * sy,  1.0f * sz), QVector2D(1.0f, 0.5f)},  // v15
+        {QVector3D(-1.0f, -1.0f, -1.0f), QVector2D(0.66f, 0.0f)}, // v12
+        {QVector3D(-1.0f, -1.0f,  1.0f), QVector2D(1.0f, 0.0f)},  // v13
+        {QVector3D(-1.0f,  1.0f, -1.0f), QVector2D(0.66f, 0.5f)}, // v14
+        {QVector3D(-1.0f,  1.0f,  1.0f), QVector2D(1.0f, 0.5f)},  // v15
 
         // Vertex data for face 4
-        {QVector3D(-1.0f * sx, -1.0f * sy, -1.0f * sz), QVector2D(0.33f, 0.0f)}, // v16
-        {QVector3D( 1.0f * sx, -1.0f * sy, -1.0f * sz), QVector2D(0.66f, 0.0f)}, // v17
-        {QVector3D(-1.0f * sx, -1.0f * sy,  1.0f * sz), QVector2D(0.33f, 0.5f)}, // v18
-        {QVector3D( 1.0f * sx, -1.0f * sy,  1.0f * sz), QVector2D(0.66f, 0.5f)}, // v19
+        {QVector3D(-1.0f, -1.0f, -1.0f), QVector2D(0.33f, 0.0f)}, // v16
+        {QVector3D( 1.0f, -1.0f, -1.0f), QVector2D(0.66f, 0.0f)}, // v17
+        {QVector3D(-1.0f, -1.0f,  1.0f), QVector2D(0.33f, 0.5f)}, // v18
+        {QVector3D( 1.0f, -1.0f,  1.0f), QVector2D(0.66f, 0.5f)}, // v19
 
         // Vertex data for face 5
-        {QVector3D(-1.0f * sx,  1.0f * sy,  1.0f * sz), QVector2D(0.33f, 0.5f)}, // v20
-        {QVector3D( 1.0f * sx,  1.0f * sy,  1.0f * sz), QVector2D(0.66f, 0.5f)}, // v21
-        {QVector3D(-1.0f * sx,  1.0f * sy, -1.0f * sz), QVector2D(0.33f, 1.0f)}, // v22
-        {QVector3D( 1.0f * sx,  1.0f * sy, -1.0f * sz), QVector2D(0.66f, 1.0f)}  // v23
+        {QVector3D(-1.0f,  1.0f,  1.0f), QVector2D(0.33f, 0.5f)}, // v20
+        {QVector3D( 1.0f,  1.0f,  1.0f), QVector2D(0.66f, 0.5f)}, // v21
+        {QVector3D(-1.0f,  1.0f, -1.0f), QVector2D(0.33f, 1.0f)}, // v22
+        {QVector3D( 1.0f,  1.0f, -1.0f), QVector2D(0.66f, 1.0f)}  // v23
     };
 
     // Indices for drawing cube faces using triangle strips.
@@ -90,21 +79,19 @@ void Cube::CreateGeometry()
 
 }
 
-void Cube::Draw()
+void Cube::draw()
 {
     //qDebug() << "DRAW CUBE " << localPosition << " " << localRotation;
 
     if(shader == NULL) shader = GameScene::getInstance()->getDefaultShader();
 
-
-    // UTILISER POSITION ET NON LOCALPOSITION
-    /*QMatrix4x4 matrix;
-    matrix.translate(localPosition);
-    matrix.rotate(localRotation);*/
+    if (!shader->bind())
+            return;
 
     QMatrix4x4 matrix = getTransform(); // transform dans le repère monde
 
     shader->setUniformValue("mvp_matrix", GameScene::getInstance()->getProjection() * matrix);
+
 
 
     // Tell OpenGL which VBOs to use

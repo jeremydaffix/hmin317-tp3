@@ -19,4 +19,14 @@ Model3D::~Model3D()
     indexBuf.destroy();
 }
 
+QOpenGLShaderProgram *Model3D::getShader() const
+{
+    return shader;
+}
+
+void Model3D::setShader(QOpenGLShaderProgram *value)
+{
+    shader = value;
+}
+
 

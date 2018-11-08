@@ -53,8 +53,8 @@ public:
     void removeChild(GameObject* child);
 
 
-    virtual void CreateGeometry();
-    virtual void Draw();
+    virtual void createGeometry();
+    virtual void draw();
 
 
 

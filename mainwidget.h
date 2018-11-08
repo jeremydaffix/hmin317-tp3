@@ -108,7 +108,7 @@ protected:
 
 private:
     QBasicTimer timer;
-    QOpenGLShaderProgram program;
+    QOpenGLShaderProgram shaderDice, shaderTerrain;
     GeometryEngine *geometries;
 
     QOpenGLTexture *texture;
@@ -146,7 +146,7 @@ private:
     //QVector3D cameraPosition = QVector3D(0, 0, -10);
     //QQuaternion cameraRotation = QQuaternion::fromEulerAngles(0, 20, 0);
 
-    Cube *cube, *cube2;
+    //Cube *cube, *cube2;
 };
 
 

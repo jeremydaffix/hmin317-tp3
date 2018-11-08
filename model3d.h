@@ -19,6 +19,9 @@ public:
     //virtual void Draw();
 
 
+    QOpenGLShaderProgram *getShader() const;
+    void setShader(QOpenGLShaderProgram *value);
+
 protected:
 
     QOpenGLBuffer arrayBuf;

@@ -47,12 +47,12 @@ void GameObject::removeChild(GameObject *child)
     child->setParent(NULL);
 }
 
-void GameObject::CreateGeometry()
+void GameObject::createGeometry()
 {
     std::cout << "CREATE GAMEOBJECT\n";
 }
 
-void GameObject::Draw()
+void GameObject::draw()
 {
     std::cout << "DRAW GAMEOBJECT\n";
 }

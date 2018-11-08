@@ -13,16 +13,16 @@ GameScene *GameScene::getInstance()
     return instance;
 }
 
-void GameScene::CreateGeometry()
+void GameScene::createGeometry()
 {
     std::list<GameObject*>::iterator it;
     for (it = children.begin(); it != children.end(); ++it)
     {
-        (*it)->CreateGeometry();
+        (*it)->createGeometry();
     }
 }
 
-void GameScene::Draw()
+void GameScene::draw()
 {
     // les position / rotation / scale de l'instance de gamescene
     // sont celles de la "camera"
@@ -30,7 +30,7 @@ void GameScene::Draw()
     std::list<GameObject*>::iterator it;
     for (it = children.begin(); it != children.end(); ++it)
     {
-        (*it)->Draw();
+        (*it)->draw();
     }
 }
 

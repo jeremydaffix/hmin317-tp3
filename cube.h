@@ -9,8 +9,8 @@ class Cube : public Model3D
 public:
     Cube(QVector3D pos = QVector3D(), QQuaternion rot = QQuaternion(), QVector3D sc = QVector3D(1, 1, 1), QOpenGLShaderProgram* sh = NULL);
 
-    void CreateGeometry();
-    void Draw();
+    void createGeometry();
+    void draw();
 };
 
 #endif // CUBE_H

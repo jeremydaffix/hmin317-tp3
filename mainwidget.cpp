@@ -75,7 +75,7 @@ MainWidget::~MainWidget()
     delete texture;
     //delete heightmap;
     delete geometries;
-    delete cube;
+    //delete cube;
     doneCurrent();
 }
 
@@ -243,16 +243,25 @@ void MainWidget::initializeGL()
 
 
 
-    cube = new Cube(QVector3D(-0.5, 0.2, -5.), QQuaternion::fromEulerAngles(0, 45, 0), QVector3D(1.5, 2.0, 1.0));
-    cube2 = new Cube(QVector3D(0.5, 0.2, -5));
+    Cube *cube = new Cube(QVector3D(-0.5, 0.2, -5.), QQuaternion::fromEulerAngles(0, 20, 0), QVector3D(1.5, 2.0, 1.0));
+    Cube *cube2 = new Cube(QVector3D(0.5, 0.2, -5));
 
     GameScene::getInstance()->addChild(cube);
     GameScene::getInstance()->addChild(cube2);
 
-    GameScene::getInstance()->CreateGeometry();
+
+    //Plane *plane = new Plane(16, QVector3D(0, -5, -5), QQuaternion::fromEulerAngles(95, 0, 0), QVector3D(1, 1, 1));
+    //GameScene::getInstance()->addChild(plane);
+
+    Terrain *terrain = new Terrain(":/island_heightmap.png", 64, QVector3D(0, -3, 0), QQuaternion::fromEulerAngles(-90, 0, 0), QVector3D(1, 1, 1));
+    terrain->setShader(&shaderTerrain);
+    GameScene::getInstance()->addChild(terrain);
 
 
-    GameScene::getInstance()->setLocalPosition(QVector3D(-2, -2, 10));
+    GameScene::getInstance()->createGeometry();
+
+
+    GameScene::getInstance()->setLocalPosition(QVector3D(0, 0, 10));
     GameScene::getInstance()->setLocalRotation(QQuaternion::fromEulerAngles(0, 0, 0));
 }
 
@@ -260,32 +269,45 @@ void MainWidget::initializeGL()
 void MainWidget::initShaders()
 {
     // Compile vertex shader
-    if (!program.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/vshader.glsl"))
+    if (!shaderDice.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/vshader.glsl"))
         close();
 
     // Compile fragment shader
-    if (!program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/fshader.glsl"))
+    if (!shaderDice.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/fshader.glsl"))
         close();
-
-
-
-    /*if (!program.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/vshader_color.glsl"))
-            close();
-
-    if (!program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/fshader_color.glsl"))
-        close();*/
 
 
     // Link shader pipeline
-    if (!program.link())
+    if (!shaderDice.link())
         close();
 
     // Bind shader pipeline for use
-    if (!program.bind())
+    if (!shaderDice.bind())
         close();
 
 
-    GameScene::getInstance()->setDefaultShader(&program);
+
+
+    // Compile vertex shader
+    if (!shaderTerrain.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/vshader_color.glsl"))
+        close();
+
+    // Compile fragment shader
+    if (!shaderTerrain.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/fshader_color.glsl"))
+        close();
+
+
+    // Link shader pipeline
+    if (!shaderTerrain.link())
+        close();
+
+    // Bind shader pipeline for use
+    /*-if (!shaderTerrain.bind())
+        close();*/
+
+
+
+    GameScene::getInstance()->setDefaultShader(&shaderDice);
 }
 //! [3]
 
@@ -373,5 +395,5 @@ void MainWidget::paintGL()
     //geometries->drawCubeGeometry(&program);
     //geometries->drawPlaneGeometry(&program, geometries->sizeTerrain);
 
-    GameScene::getInstance()->Draw();
+    GameScene::getInstance()->draw();
 }
