@@ -135,24 +135,38 @@ void MainWidget::timerEvent(QTimerEvent *)
 
     bool needUpdate = true;
 
+    QVector3D rotCam = GameScene::getInstance()->getLocalRotation().toEulerAngles();
+
     switch(movementDirection)
     {
         case DIRECTION::UP:
-            //if(cameraPosition.z() > -4.0) cameraPosition.setZ(cameraPosition.z() - 0.2);
-            if(cameraMoveLeftRight.y() > -6) cameraMoveLeftRight.setY(cameraMoveLeftRight.y() - 0.2);
+            //if(posCam.y() < 5) posCam.setY(posCam.y() + 0.2);
+            //if(posCam.z() > -12) posCam.setZ(posCam.z() - 0.2);
+            GameScene::getInstance()->move(QVector3D(0, 0, -0.2));
         break;
 
         case DIRECTION::DOWN:
-            //if(cameraPosition.z() < -2) cameraPosition.setZ(cameraPosition.z() + 0.2);
-            if(cameraMoveLeftRight.y() < 6) cameraMoveLeftRight.setY(cameraMoveLeftRight.y() + 0.2);
+            //if(posCam.y() > -5) posCam.setY(posCam.y() - 0.2);
+            //if(posCam.z() < 12) posCam.setZ(posCam.z() + 0.2);
+            GameScene::getInstance()->move(QVector3D(0, 0, 0.2));
         break;
 
         case DIRECTION::LEFT:
-            if(cameraMoveLeftRight.x() < 6) cameraMoveLeftRight.setX(cameraMoveLeftRight.x() + 0.2);
+            //if(posCam.x() > -12) posCam.setX(posCam.x() - 0.2);
+            GameScene::getInstance()->move(QVector3D(-0.2, 0, 0));
         break;
 
         case DIRECTION::RIGHT:
-            if(cameraMoveLeftRight.x() > -6) cameraMoveLeftRight.setX(cameraMoveLeftRight.x() - 0.2);
+            //if(posCam.x() < 12) posCam.setX(posCam.x() + 0.2);
+            GameScene::getInstance()->move(QVector3D(0.2, 0, 0));
+        break;
+
+        case DIRECTION::TURN_LEFT:
+            rotCam.setY(rotCam.y() + 3);
+        break;
+
+        case DIRECTION::TURN_RIGHT:
+            rotCam.setY(rotCam.y() - 3);
         break;
 
         default:
@@ -160,6 +174,15 @@ void MainWidget::timerEvent(QTimerEvent *)
         break;
 
     }
+
+    QVector3D posCam = GameScene::getInstance()->getLocalPosition();
+    if(posCam.x() < -12) posCam.setX(-12);
+    if(posCam.x() > 12) posCam.setX(12);
+    if(posCam.z() < -12) posCam.setZ(-12);
+    if(posCam.z() > 12) posCam.setZ(12);
+    GameScene::getInstance()->setLocalPosition(posCam);
+
+    GameScene::getInstance()->setLocalRotation(QQuaternion::fromEulerAngles(rotCam));
 
     if(needUpdate) update();
 }
@@ -186,6 +209,14 @@ void MainWidget::keyPressEvent(QKeyEvent* e)
 
         case Qt::Key_D:
             movementDirection = DIRECTION::RIGHT;
+        break;
+
+        case Qt::Key_A:
+            movementDirection = DIRECTION::TURN_LEFT;
+        break;
+
+        case Qt::Key_E:
+            movementDirection = DIRECTION::TURN_RIGHT;
         break;
 
         default:
@@ -243,8 +274,8 @@ void MainWidget::initializeGL()
 
 
 
-    Cube *cube = new Cube(QVector3D(-0.5, 0.2, -5.), QQuaternion::fromEulerAngles(0, 20, 0), QVector3D(1.5, 2.0, 1.0));
-    Cube *cube2 = new Cube(QVector3D(0.5, 0.2, -5));
+    Cube *cube = new Cube(QVector3D(-0.5, 5, -5.), QQuaternion::fromEulerAngles(0, 20, 0), QVector3D(1.5, 2.0, 1.0));
+    Cube *cube2 = new Cube(QVector3D(0.5, 5, -5));
 
     GameScene::getInstance()->addChild(cube);
     GameScene::getInstance()->addChild(cube2);
@@ -253,7 +284,7 @@ void MainWidget::initializeGL()
     //Plane *plane = new Plane(16, QVector3D(0, -5, -5), QQuaternion::fromEulerAngles(95, 0, 0), QVector3D(1, 1, 1));
     //GameScene::getInstance()->addChild(plane);
 
-    Terrain *terrain = new Terrain(":/island_heightmap.png", 64, QVector3D(0, -3, 0), QQuaternion::fromEulerAngles(-90, 0, 0), QVector3D(1, 1, 1));
+    Terrain *terrain = new Terrain(":/island_heightmap.png", 128, QVector3D(0, -3, 0), QQuaternion::fromEulerAngles(-90, 0, 0), QVector3D(2, 2, 2));
     terrain->setShader(&shaderTerrain);
     GameScene::getInstance()->addChild(terrain);
 
@@ -261,7 +292,7 @@ void MainWidget::initializeGL()
     GameScene::getInstance()->createGeometry();
 
 
-    GameScene::getInstance()->setLocalPosition(QVector3D(0, 0, 10));
+    //GameScene::getInstance()->setLocalPosition(QVector3D(0, 0, 10));
     GameScene::getInstance()->setLocalRotation(QQuaternion::fromEulerAngles(0, 0, 0));
 }
 

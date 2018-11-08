@@ -85,6 +85,31 @@ QVector3D GameObject::getScale() const
     return worldScale;
 }
 
+
+// déplacer l'objet, non pas dans la direction du repère monde
+// mais en prenant en compte sa rotation (+ celles de sa hiérarchie)
+void GameObject::move(QVector3D v)
+{
+    // calculer la rotation / direction
+
+    QQuaternion rot = localRotation;
+
+    GameObject *go = parent;
+
+    while(go != NULL) {
+
+        if(go->getParent() != NULL) rot = go->getLocalRotation() * rot;
+        else go->getLocalRotation().inverted() * rot; // racine de la scène
+
+        go = go->getParent();
+    }
+
+
+    QVector3D newV = rot.rotatedVector(v);
+
+    setLocalPosition(localPosition + newV);
+}
+
 /*void GameObject::setScale(const QVector3D &value)
 {
 

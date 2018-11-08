@@ -57,8 +57,8 @@ QMatrix4x4 GameScene::getLocalTransform() const
 {
     QMatrix4x4 transf;
 
-    transf.translate(- getLocalPosition());
     transf.rotate(getLocalRotation().inverted());
+    transf.translate(- getLocalPosition());
     transf.scale(getLocalScale());
 
     return transf;

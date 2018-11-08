@@ -30,7 +30,7 @@ void main()
        terrain_color = vec3(0.4, 0.4, 0.4);
     }
 
-    else if (a_position.z < 0.65) // eau
+    else if (a_position.z < 0.60) // eau
     {
        terrain_color = vec3(0.2, 0.2, 0.7);
     }

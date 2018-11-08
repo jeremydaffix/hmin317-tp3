@@ -38,6 +38,9 @@ public:
     //void setScale(const QVector3D &value);
 
 
+    void move(QVector3D v);
+
+
     virtual QMatrix4x4 getLocalTransform() const;
     QMatrix4x4 getTransform() const;
 

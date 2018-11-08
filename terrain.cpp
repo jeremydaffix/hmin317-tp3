@@ -23,7 +23,6 @@ void Terrain::createGeometry()
     float size = 16. / nbrVertices; // même taille quel que soit le nombre de sommet
     float centerOffset = (nbrVertices - 1) * size / 2.; // pour que le terrain soit centré sur sa position
 
-
     int nbrFaces = nbrVertices - 1;
     int nbrIndices = (nbrFaces * nbrFaces * 6) + (nbrFaces * 4);
 

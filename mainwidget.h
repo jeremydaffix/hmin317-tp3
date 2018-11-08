@@ -77,7 +77,9 @@ enum DIRECTION {
   UP,
   DOWN,
   LEFT,
-  RIGHT
+  RIGHT,
+  TURN_LEFT,
+  TURN_RIGHT
 };
 
 
