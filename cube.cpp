@@ -8,22 +8,17 @@ Cube::Cube(QVector3D pos, QQuaternion rot, QVector3D sc, QOpenGLShaderProgram* s
 
 void Cube::CreateGeometry()
 {
-    std::cout << "CREATE CUBE\n";
+    qDebug() << "CREATE CUBE\n";
 
+    //QVector3D sc = getScale();
 
-    // UTILISER POSITION ET NON LOCALPOSITION
-    /*float posX = localPosition.x();
-    float posY = localPosition.y();
-    float posZ = localPosition.z();*/
+    //float sx = sc.x() / 2.;
+    //float sy = sc.y() / 2.;
+    //float sz = sc.z() / 2.;
 
-    float sizeX = localScale.x();
-    float sizeY = localScale.y();
-    float sizeZ = localScale.z();
-
-    float sx = sizeX / 2.;
-    float sy = sizeY / 2.;
-    float sz = sizeZ / 2.;
-
+    float sx = 1.;
+    float sy = 1.;
+    float sz = 1.;
 
 
     // For cube we would need only 8 vertices but we have to
@@ -103,14 +98,14 @@ void Cube::Draw()
 
 
     // UTILISER POSITION ET NON LOCALPOSITION
-
-    QMatrix4x4 matrix;
+    /*QMatrix4x4 matrix;
     matrix.translate(localPosition);
-    matrix.rotate(localRotation);
+    matrix.rotate(localRotation);*/
+
+    QMatrix4x4 matrix = getTransform(); // transform dans le repère monde
+
     shader->setUniformValue("mvp_matrix", GameScene::getInstance()->getProjection() * matrix);
 
-
-qDebug() << GameScene::getInstance()->getProjection();
 
     // Tell OpenGL which VBOs to use
     arrayBuf.bind();

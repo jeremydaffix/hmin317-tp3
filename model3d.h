@@ -11,7 +11,7 @@ class Model3D : public GameObject, protected QOpenGLFunctions
 {
 public:
 
-    Model3D(QVector3D pos = QVector3D(), QQuaternion rot = QQuaternion(), QVector3D sc = QVector3D(), QOpenGLShaderProgram* sh = NULL);
+    Model3D(QVector3D pos = QVector3D(), QQuaternion rot = QQuaternion(), QVector3D sc = QVector3D(1, 1, 1), QOpenGLShaderProgram* sh = NULL);
     virtual ~Model3D();
 
 

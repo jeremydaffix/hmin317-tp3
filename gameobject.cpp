@@ -69,12 +69,54 @@ void GameObject::setLocalScale(const QVector3D &value)
 
 QVector3D GameObject::getScale() const
 {
+    // scale repère world = multiplication des scales de la hiérarchie
 
+    QVector3D worldScale = getLocalScale();
+
+    GameObject *go = parent;
+
+    while(go != NULL) {
+
+        worldScale *= go->getLocalScale();
+
+        go = go->getParent();
+    }
+
+    return worldScale;
 }
 
-void GameObject::setScale(const QVector3D &value)
+/*void GameObject::setScale(const QVector3D &value)
 {
 
+}*/
+
+
+QMatrix4x4 GameObject::getLocalTransform() const
+{
+    QMatrix4x4 transf;
+
+    transf.translate(getLocalPosition());
+    transf.rotate(getLocalRotation());
+    transf.scale(getLocalScale());
+
+    return transf;
+}
+
+
+QMatrix4x4 GameObject::getTransform() const
+{
+    QMatrix4x4 transf = getLocalTransform();
+
+    GameObject *go = parent;
+
+    while(go != NULL) {
+
+        transf = go->getLocalTransform() * transf;
+
+        go = go->getParent();
+    }
+
+    return transf;
 }
 
 QVector3D GameObject::getLocalPosition() const
@@ -87,15 +129,28 @@ void GameObject::setLocalPosition(const QVector3D &value)
     localPosition = value;
 }
 
-QVector3D GameObject::getPosition() const
+/*QVector3D GameObject::getPosition() const
+{
+    // position repère world = addition des positions de la hiérarchie
+
+    QVector3D worldPos = getLocalPosition();
+
+    GameObject *go = parent;
+
+    while(go != NULL) {
+
+        worldPos += go->getLocalPosition(); // FAUX si rotation
+
+        go = go->getParent();
+    }
+
+    return worldPos;
+}*/
+
+/*void GameObject::setPosition(const QVector3D &value)
 {
 
-}
-
-void GameObject::setPosition(const QVector3D &value)
-{
-
-}
+}*/
 
 QQuaternion GameObject::getLocalRotation() const
 {
@@ -107,14 +162,27 @@ void GameObject::setLocalRotation(const QQuaternion &value)
     localRotation = value;
 }
 
-QQuaternion GameObject::getRotation() const
+/*QQuaternion GameObject::getRotation() const
+{
+    // rotation repère world = multiplication des rotations de la hiérarchie
+
+    QQuaternion worldRot = getLocalRotation();
+
+    GameObject *go = parent;
+
+    while(go != NULL) {
+
+        worldRot = go->getLocalRotation() * worldRot; // à vérifier !!!
+
+        go = go->getParent();
+    }
+
+    return worldRot;
+}*/
+
+/*void GameObject::setRotation(const QQuaternion &value)
 {
 
-}
-
-void GameObject::setRotation(const QQuaternion &value)
-{
-
-}
+}*/
 
 

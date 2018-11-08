@@ -13,7 +13,7 @@
 class GameObject
 {
 public:
-    GameObject(QVector3D pos = QVector3D(), QQuaternion rot = QQuaternion(), QVector3D sc = QVector3D());
+    GameObject(QVector3D pos = QVector3D(), QQuaternion rot = QQuaternion(), QVector3D sc = QVector3D(1, 1, 1));
     virtual ~GameObject();
 
 
@@ -21,21 +21,25 @@ public:
     void setLocalPosition(const QVector3D &value);
 
     // a calculer en fonction hiérarchie
-    QVector3D getPosition() const;
-    void setPosition(const QVector3D &value);
+    //QVector3D getPosition() const;
+    //void setPosition(const QVector3D &value);
 
     QQuaternion getLocalRotation() const;
     void setLocalRotation(const QQuaternion &value);
 
     // a calculer en fonction hiérarchie
-    QQuaternion getRotation() const;
-    void setRotation(const QQuaternion &value);
+    //QQuaternion getRotation() const;
+    //void setRotation(const QQuaternion &value);
 
     QVector3D getLocalScale() const;
     void setLocalScale(const QVector3D &value);
 
     QVector3D getScale() const;
-    void setScale(const QVector3D &value);
+    //void setScale(const QVector3D &value);
+
+
+    virtual QMatrix4x4 getLocalTransform() const;
+    QMatrix4x4 getTransform() const;
 
 
     GameObject *getParent() const;

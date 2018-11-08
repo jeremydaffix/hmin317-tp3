@@ -18,6 +18,8 @@ public:
     QMatrix4x4 getProjection() const;
     void setProjection(const QMatrix4x4 &value);
 
+    QMatrix4x4 getLocalTransform() const;
+
 private:
     GameScene(); // SINGLETON
 

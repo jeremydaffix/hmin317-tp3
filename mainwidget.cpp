@@ -243,7 +243,7 @@ void MainWidget::initializeGL()
 
 
 
-    cube = new Cube(QVector3D(-0.5, 0.2, -5.), QQuaternion::fromEulerAngles(0, 0, 0), QVector3D(1.5, 1.5, 1.0));
+    cube = new Cube(QVector3D(-0.5, 0.2, -5.), QQuaternion::fromEulerAngles(0, 45, 0), QVector3D(1.5, 2.0, 1.0));
     cube2 = new Cube(QVector3D(0.5, 0.2, -5));
 
     GameScene::getInstance()->addChild(cube);
@@ -252,8 +252,8 @@ void MainWidget::initializeGL()
     GameScene::getInstance()->CreateGeometry();
 
 
-    GameScene::getInstance()->setPosition(QVector3D(0, 0, -10));
-    GameScene::getInstance()->setRotation(QQuaternion::fromEulerAngles(0, 20, 0));
+    GameScene::getInstance()->setLocalPosition(QVector3D(-2, -2, 10));
+    GameScene::getInstance()->setLocalRotation(QQuaternion::fromEulerAngles(0, 0, 0));
 }
 
 //! [3]
