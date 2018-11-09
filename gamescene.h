@@ -9,8 +9,8 @@ class GameScene : public GameObject
 public:
     static GameScene* getInstance();
 
-    void createGeometry();
-    void draw();
+    /*void createGeometry();
+    void draw();*/
 
     QOpenGLShaderProgram *getDefaultShader();
     void setDefaultShader(QOpenGLShaderProgram *value);

@@ -9,6 +9,8 @@
 #include <QOpenGLBuffer>
 #include <QImage>
 
+#include<component.h>
+
 
 class GameObject
 {
@@ -55,9 +57,16 @@ public:
     void addChild(GameObject* child);
     void removeChild(GameObject* child);
 
+    std::list<Component *> getComponents() const;
+    void addComponent(Component* c);
+    void removeComponent(Component* c);
+
 
     virtual void createGeometry();
     virtual void draw();
+
+    virtual void update();
+    virtual void fixedUpdate();
 
 
 
@@ -68,6 +77,8 @@ protected:
 
     GameObject* parent = NULL;
     std::list<GameObject*> children; // pattern composite :o
+
+    std::list<Component*> components;
 };
 
 

@@ -10,7 +10,9 @@ SOURCES += main.cpp \
     terrain.cpp \
     quadtree.cpp \
     gamescene.cpp \
-    model3d.cpp
+    model3d.cpp \
+    component.cpp \
+    movingcubecomponent.cpp
 
 SOURCES += \
     mainwidget.cpp \
@@ -25,7 +27,9 @@ HEADERS += \
     terrain.h \
     quadtree.h \
     gamescene.h \
-    model3d.h
+    model3d.h \
+    component.h \
+    movingcubecomponent.h
 
 RESOURCES += \
     shaders.qrc \

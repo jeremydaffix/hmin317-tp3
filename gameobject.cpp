@@ -47,7 +47,33 @@ void GameObject::removeChild(GameObject *child)
     child->setParent(NULL);
 }
 
-void GameObject::createGeometry()
+
+
+std::list<Component *> GameObject::getComponents() const
+{
+    return components;
+}
+
+void GameObject::addComponent(Component *c)
+{
+    if(c->getContainer() != NULL) {
+
+        c->getContainer()->removeComponent(c);
+    }
+
+    components.push_back(c);
+    c->setContainer(this);
+}
+
+void GameObject::removeComponent(Component *c)
+{
+    components.remove(c);
+    c->setContainer(NULL);
+}
+
+
+
+/*void GameObject::createGeometry()
 {
     std::cout << "CREATE GAMEOBJECT\n";
 }
@@ -55,6 +81,45 @@ void GameObject::createGeometry()
 void GameObject::draw()
 {
     std::cout << "DRAW GAMEOBJECT\n";
+}*/
+
+
+void GameObject::createGeometry()
+{
+    std::list<GameObject*>::iterator it;
+    for (it = children.begin(); it != children.end(); ++it)
+    {
+        (*it)->createGeometry();
+    }
+}
+
+void GameObject::draw()
+{
+    std::list<GameObject*>::iterator it;
+    for (it = children.begin(); it != children.end(); ++it)
+    {
+        (*it)->draw();
+    }
+}
+
+
+
+void GameObject::update()
+{
+    std::list<GameObject*>::iterator it;
+    for (it = children.begin(); it != children.end(); ++it)
+    {
+        (*it)->update();
+    }
+}
+
+void GameObject::fixedUpdate()
+{
+    std::list<GameObject*>::iterator it;
+    for (it = children.begin(); it != children.end(); ++it)
+    {
+        (*it)->fixedUpdate();
+    }
 }
 
 QVector3D GameObject::getLocalScale() const

@@ -8,6 +8,8 @@ Cube::Cube(QVector3D pos, QQuaternion rot, QVector3D sc, QOpenGLShaderProgram* s
 
 void Cube::createGeometry()
 {
+    GameObject::createGeometry(); // création enfants
+
     //qDebug() << "CREATE CUBE\n";
 
     // For cube we would need only 8 vertices but we have to
@@ -81,6 +83,8 @@ void Cube::createGeometry()
 
 void Cube::draw()
 {
+    GameObject::draw(); // affichage enfants
+
     //qDebug() << "DRAW CUBE " << localPosition << " " << localRotation;
 
     if(shader == NULL) shader = GameScene::getInstance()->getDefaultShader();

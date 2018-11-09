@@ -21,7 +21,7 @@ GameScene *GameScene::getInstance()
         return instances[currentNumInstance];
 }
 
-void GameScene::createGeometry()
+/*void GameScene::createGeometry()
 {
     std::list<GameObject*>::iterator it;
     for (it = children.begin(); it != children.end(); ++it)
@@ -40,7 +40,7 @@ void GameScene::draw()
     {
         (*it)->draw();
     }
-}
+}*/
 
 GameScene::GameScene()
 {

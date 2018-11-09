@@ -59,6 +59,7 @@
 #include <terrain.h>
 #include <quadtree.h>
 #include <plane.h>
+#include <movingcubecomponent.h>
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>

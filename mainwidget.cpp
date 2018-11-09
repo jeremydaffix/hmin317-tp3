@@ -96,25 +96,16 @@ void MainWidget::timerEvent(QTimerEvent *)
 {
     GameScene::setCurrentNumInstance(idScene);
 
-    // Decrease angular speed (friction)
-    angularSpeed *= 0.99;
+    GameScene::getInstance()->fixedUpdate();
 
-    // Stop rotation when speed goes below threshold
-    if (angularSpeed < 0.01) {
-        angularSpeed = 0.0;
-    } else {
-        // Update rotation
-        //cameraRotation = QQuaternion::fromAxisAndAngle(rotationAxis, angularSpeed) * cameraRotation; ////
 
-        // Request an update
-        update();
-    }
 
     // pour faire tourner la caméra sur elle même
    // cameraRotation = QQuaternion::fromEulerAngles(0, rotationSpeed, 0) * cameraRotation; // tourner à vitesse constante
     //qDebug() << cameraRotation.toEulerAngles();
 
     update();
+
 
     // déplacement géré ici
     // position pas changée dans l'event clavier
@@ -268,9 +259,13 @@ void MainWidget::initializeGL()
 
     Cube *cube = new Cube(QVector3D(-0.5, 5, -5.), QQuaternion::fromEulerAngles(0, 20, 0), QVector3D(1.5, 2.0, 1.0));
     Cube *cube2 = new Cube(QVector3D(0.5, 5, -5));
+    Cube *cube3 = new Cube(QVector3D(2, 2, 0), QQuaternion(), QVector3D(1, 1, 1));
 
     GameScene::getInstance()->addChild(cube);
     GameScene::getInstance()->addChild(cube2);
+    cube2->addChild(cube3);
+
+    cube2->addComponent(new MovingCubeComponent());
 
 
     //Plane *plane = new Plane(16, QVector3D(0, -5, -5), QQuaternion::fromEulerAngles(95, 0, 0), QVector3D(1, 1, 1));
@@ -390,5 +385,6 @@ void MainWidget::paintGL()
 
     texture->bind();
 
+    GameScene::getInstance()->update();
     GameScene::getInstance()->draw();
 }
