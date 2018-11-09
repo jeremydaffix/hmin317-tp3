@@ -68,16 +68,16 @@ int main(int argc, char *argv[])
     app.setApplicationVersion("0.1");
 #ifndef QT_NO_OPENGL
 
-   MainWidget widget;
-   widget.show();
+   /*MainWidget widget;
+   widget.show();*/
 
 
-    /*MainWidget widget1(1), widget10(10), widget100(100), widget1000(1000);
+    MainWidget widget1(1, 0), widget10(10, 1), widget100(100, 2), widget1000(1000, 3);
 
     widget1.show();
     widget10.show();
     widget100.show();
-    widget1000.show();*/
+    widget1000.show();
 
 
 #else

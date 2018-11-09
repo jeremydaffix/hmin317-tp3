@@ -91,7 +91,7 @@ class MainWidget : public QOpenGLWidget, protected QOpenGLFunctions
     Q_OBJECT
 
 public:
-    explicit MainWidget(int _fps = 60, QWidget *parent = 0);
+    explicit MainWidget(int _fps = 60, int _idScene = 0, QWidget *parent = 0);
     ~MainWidget();
 
 protected:
@@ -114,7 +114,6 @@ private:
     GeometryEngine *geometries;
 
     QOpenGLTexture *texture;
-    //QImage *heightmap;
 
     //QMatrix4x4 projection;
 
@@ -123,20 +122,8 @@ private:
     qreal angularSpeed;
 
 
-    // position et rotation tp1
-    //QVector3D cameraPosition = QVector3D(-8.0, -8.0, -5.0);
-    //QQuaternion cameraRotation = QQuaternion::fromEulerAngles(-60, 0, 0);
-
-    // pour faire tourner la camera sur elle-meme (tp2)
-    // + inverser R et T dans paint
-    //QQuaternion cameraRotation = QQuaternion::fromEulerAngles(-90, 0, 0); // orientation initiale caméra
-    //QVector3D cameraPosition = QVector3D(-16, -16, -3); // position initiale caméra
-    QVector3D cameraMoveLeftRight = QVector3D(); // on stock le déplacement droite / gauche à part pour l'orienter en fonction de l'orientation caméra
-
-
     DIRECTION movementDirection = DIRECTION::NO;
 
-    float rotationSpeed = 0.5;
 
     int fps = 0;
 
@@ -144,11 +131,14 @@ private:
 
     // graph de scene
 
+    int idScene = 0;
+
 
     //QVector3D cameraPosition = QVector3D(0, 0, -10);
     //QQuaternion cameraRotation = QQuaternion::fromEulerAngles(0, 20, 0);
 
     //Cube *cube, *cube2;
+
 };
 
 

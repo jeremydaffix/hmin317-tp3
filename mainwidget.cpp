@@ -55,7 +55,7 @@
 
 #include <math.h>
 
-MainWidget::MainWidget(int _fps, QWidget *parent) :
+MainWidget::MainWidget(int _fps, int _idScene, QWidget *parent) :
     QOpenGLWidget(parent),
     //geometries(0),
     texture(0),
@@ -63,7 +63,7 @@ MainWidget::MainWidget(int _fps, QWidget *parent) :
 {
 
     fps = _fps;
-
+    idScene = _idScene;
 
 }
 
@@ -82,33 +82,20 @@ MainWidget::~MainWidget()
 //! [0]
 void MainWidget::mousePressEvent(QMouseEvent *e)
 {
-    // Save mouse press position
-    mousePressPosition = QVector2D(e->localPos());
+
 }
 
 void MainWidget::mouseReleaseEvent(QMouseEvent *e)
 {
-    // Mouse release position - mouse press position
-    QVector2D diff = QVector2D(e->localPos()) - mousePressPosition;
 
-    // Rotation axis is perpendicular to the mouse position difference
-    // vector
-    QVector3D n = QVector3D(diff.y(), diff.x(), 0.0).normalized();
-
-    // Accelerate angular speed relative to the length of the mouse sweep
-    qreal acc = diff.length() / 100.0;
-
-    // Calculate new rotation axis as weighted sum
-    rotationAxis = (rotationAxis * angularSpeed + n * acc).normalized();
-
-    // Increase angular speed
-    angularSpeed += acc;
 }
 //! [0]
 
 //! [1]
 void MainWidget::timerEvent(QTimerEvent *)
 {
+    GameScene::setCurrentNumInstance(idScene);
+
     // Decrease angular speed (friction)
     angularSpeed *= 0.99;
 
@@ -193,6 +180,8 @@ void MainWidget::timerEvent(QTimerEvent *)
 void MainWidget::keyPressEvent(QKeyEvent* e)
 {
 
+    GameScene::setCurrentNumInstance(idScene);
+
     switch(e->key())
     {
         case Qt::Key_Z:
@@ -225,7 +214,7 @@ void MainWidget::keyPressEvent(QKeyEvent* e)
     }
 
 
-    switch(e->key())
+    /*switch(e->key())
     {
         case Qt::Key_Up:
             if(rotationSpeed < 10.0) rotationSpeed += 0.1;
@@ -237,7 +226,7 @@ void MainWidget::keyPressEvent(QKeyEvent* e)
 
         default:
         break;
-    }
+    }*/
 
 }
 
@@ -250,6 +239,9 @@ void MainWidget::keyReleaseEvent(QKeyEvent* e)
 
 void MainWidget::initializeGL()
 {
+    GameScene::setCurrentNumInstance(idScene);
+
+
     initializeOpenGLFunctions();
 
     glClearColor(0, 0, 0, 1);
@@ -265,7 +257,7 @@ void MainWidget::initializeGL()
     glEnable(GL_CULL_FACE);
 //! [2]
 
-    geometries = new GeometryEngine;
+    //geometries = new GeometryEngine;
 
     // Use QBasicTimer because its faster than QTimer
     timer.start(1000 / fps, this);
@@ -299,6 +291,9 @@ void MainWidget::initializeGL()
 //! [3]
 void MainWidget::initShaders()
 {
+    GameScene::setCurrentNumInstance(idScene);
+
+
     // Compile vertex shader
     if (!shaderDice.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/vshader.glsl"))
         close();
@@ -363,6 +358,9 @@ void MainWidget::initTextures()
 //! [5]
 void MainWidget::resizeGL(int w, int h)
 {
+    GameScene::setCurrentNumInstance(idScene);
+
+
     // Calculate aspect ratio
     qreal aspect = qreal(w) / qreal(h ? h : 1);
 
@@ -384,47 +382,13 @@ void MainWidget::resizeGL(int w, int h)
 
 void MainWidget::paintGL()
 {
+    GameScene::setCurrentNumInstance(idScene);
+
+
     // Clear color and depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     texture->bind();
-
-//! [6]
-    // Calculate model view transformation
-    //QMatrix4x4 matrix;
-
-    // position fixe caméra (tp1)
-    //matrix.translate(0.0, 0.0, -55.0);
-
-    // position au dessus du terrain, modifiable par ZQSD (tp1)
-    //matrix.translate(cameraPosition);
-    //matrix.rotate(cameraRotation);
-
-     //matrix.lookAt(cameraPosition, QVector3D(0, 0, 0), QVector3D(0.0, 1.0, 0.0));
-
-    // on inverse R et T si on veut faire tourner la camera sur elle même (tp2)
-    // (sinon elle tourne autour de l'origine)
-    //matrix.rotate(cameraRotation);
-    //matrix.translate(cameraPosition);
-    //matrix.translate(cameraMoveLeftRight);
-
-
-    /*QVector3D mlr =  QQuaternion::fromEulerAngles(0, cameraRotation.toEulerAngles().y(), 0) * cameraMoveLeftRight;
-    //mlr.setZ(0);
-    qDebug() << cameraMoveLeftRight << mlr;
-    matrix.translate(mlr);*/
-
-
-    // Set modelview-projection matrix
-    //program.setUniformValue("mvp_matrix", projection * matrix);
-//! [6]
-
-    // Use texture unit 0 which contains cube.png
-    //program.setUniformValue("texture", 0);
-
-    // Draw cube geometry
-    //geometries->drawCubeGeometry(&program);
-    //geometries->drawPlaneGeometry(&program, geometries->sizeTerrain);
 
     GameScene::getInstance()->draw();
 }

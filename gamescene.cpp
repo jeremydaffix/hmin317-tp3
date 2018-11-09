@@ -1,16 +1,24 @@
 #include "gamescene.h"
 
 
-GameScene *GameScene::instance = nullptr;
-
+//GameScene *GameScene::instance = nullptr;
+int GameScene::currentNumInstance = 0;
+GameScene * GameScene::instances[];
 
 GameScene *GameScene::getInstance()
 {
-    if(!instance) {
+    /*if(!instance) {
         instance = new GameScene();
     }
 
-    return instance;
+    return instance;*/
+
+    if(!
+            instances[currentNumInstance]) {
+            instances[currentNumInstance] = new GameScene();
+        }
+
+        return instances[currentNumInstance];
 }
 
 void GameScene::createGeometry()
@@ -37,6 +45,16 @@ void GameScene::draw()
 GameScene::GameScene()
 {
 
+}
+
+int GameScene::getCurrentNumInstance()
+{
+    return currentNumInstance;
+}
+
+void GameScene::setCurrentNumInstance(int value)
+{
+    currentNumInstance = value;
 }
 
 QMatrix4x4 GameScene::getProjection() const
