@@ -11,12 +11,12 @@ void Objet3d:: createGeometry(){
     std::vector<QVector3D> temp_vertices;
     std::vector< QVector3D> temp_normals;
 
-    arrayBuf.bind();
+  /*  arrayBuf.bind();
     arrayBuf.allocate(vertices, 24 * sizeof(VertexData));
 
     // Transfer index data to VBO 1
     indexBuf.bind();
-    indexBuf.allocate(indices, 34 * sizeof(GLushort));
+    indexBuf.allocate(indices, 34 * sizeof(GLushort));*/
 }
 void Objet3d::draw(){
 
