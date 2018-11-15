@@ -4,6 +4,8 @@
 #include <gameobject.h>
 
 
+// Component pour faire bouger un cube.
+// EN COURS DE DEV
 class MovingCubeComponent : public Component
 {
 public:

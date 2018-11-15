@@ -7,6 +7,10 @@
 
 #include <mainwidget.h>
 
+// Classe pour simuler un déroulement des jours, et des saisons
+// L'objet connait 4 MainWidget qui afficheront chacun une saison différente,
+// et leur envoie chacun un message avec la saison à afficher
+// (ce qui se concrètise de leur côté en changeant le shader du terrain)
 class Calendar : public QObject
 {
     Q_OBJECT
@@ -20,10 +24,10 @@ public slots:
 protected:
 
     QBasicTimer timerSeason;
-    void timerEvent(QTimerEvent *e) override;
-    int currentDay = 0;
+    void timerEvent(QTimerEvent *e) override; // événement appelé toutes les X ms
+    int currentDay = 0; // jour courant, de 0 à 364
 
-    MainWidget *widget1, *widget2, *widget3, *widget4;
+    MainWidget *widget1, *widget2, *widget3, *widget4; // 1 widget = 1 saison
 
 };
 

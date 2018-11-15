@@ -8,7 +8,6 @@ SOURCES += main.cpp \
     cube.cpp \
     plane.cpp \
     terrain.cpp \
-    quadtree.cpp \
     gamescene.cpp \
     model3d.cpp \
     component.cpp \
@@ -17,17 +16,14 @@ SOURCES += main.cpp \
     calendar.cpp
 
 SOURCES += \
-    mainwidget.cpp \
-    geometryengine.cpp
+    mainwidget.cpp
 
 HEADERS += \
     mainwidget.h \
-    geometryengine.h \
     gameobject.h \
     cube.h \
     plane.h \
     terrain.h \
-    quadtree.h \
     gamescene.h \
     model3d.h \
     component.h \

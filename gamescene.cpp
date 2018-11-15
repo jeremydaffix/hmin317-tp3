@@ -7,11 +7,6 @@ GameScene * GameScene::instances[];
 
 GameScene *GameScene::getInstance()
 {
-    /*if(!instance) {
-        instance = new GameScene();
-    }
-
-    return instance;*/
 
     if(!
             instances[currentNumInstance]) {
@@ -20,27 +15,6 @@ GameScene *GameScene::getInstance()
 
         return instances[currentNumInstance];
 }
-
-/*void GameScene::createGeometry()
-{
-    std::list<GameObject*>::iterator it;
-    for (it = children.begin(); it != children.end(); ++it)
-    {
-        (*it)->createGeometry();
-    }
-}
-
-void GameScene::draw()
-{
-    // les position / rotation / scale de l'instance de gamescene
-    // sont celles de la "camera"
-
-    std::list<GameObject*>::iterator it;
-    for (it = children.begin(); it != children.end(); ++it)
-    {
-        (*it)->draw();
-    }
-}*/
 
 GameScene::GameScene()
 {

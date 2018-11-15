@@ -30,6 +30,7 @@ std::list<GameObject *> GameObject::getChildren() const
     return children;
 }
 
+// ajout d'un enfant
 void GameObject::addChild(GameObject *child)
 {
     if(child->getParent() != NULL) {
@@ -72,18 +73,8 @@ void GameObject::removeComponent(Component *c)
 }
 
 
-
-/*void GameObject::createGeometry()
-{
-    std::cout << "CREATE GAMEOBJECT\n";
-}
-
-void GameObject::draw()
-{
-    std::cout << "DRAW GAMEOBJECT\n";
-}*/
-
-
+// cette méthode est appelée par les createGeometry() des classes qui héritent de GameObject.
+// elle définit le comportement par défaut : appeler la création de la géométrie de chaque enfant.
 void GameObject::createGeometry()
 {
     std::list<GameObject*>::iterator it;
@@ -93,6 +84,8 @@ void GameObject::createGeometry()
     }
 }
 
+// cette méthode est appelée par les draw() des classes qui héritent de GameObject.
+// elle définit le comportement par défaut : appeler l'affichage de chaque enfant.
 void GameObject::draw()
 {
     std::list<GameObject*>::iterator it;
@@ -103,6 +96,8 @@ void GameObject::draw()
 }
 
 
+
+// pour les composants (en cours de dév)
 
 void GameObject::update()
 {
@@ -122,6 +117,9 @@ void GameObject::fixedUpdate()
     }
 }
 
+// ***
+
+
 QVector3D GameObject::getLocalScale() const
 {
     return localScale;
@@ -132,6 +130,8 @@ void GameObject::setLocalScale(const QVector3D &value)
     localScale = value;
 }
 
+
+// calcul du scale en prenant en compte la hiérarchie du graphe de scène !
 QVector3D GameObject::getScale() const
 {
     // scale repère world = multiplication des scales de la hiérarchie
@@ -180,7 +180,7 @@ void GameObject::move(QVector3D v)
 
 }*/
 
-
+// calcul de la matrice de transformation locale
 QMatrix4x4 GameObject::getLocalTransform() const
 {
     QMatrix4x4 transf;
@@ -193,6 +193,7 @@ QMatrix4x4 GameObject::getLocalTransform() const
 }
 
 
+// calcul de la matrice de transformation en prenant en compte la hiérarchie du graphe de scène !
 QMatrix4x4 GameObject::getTransform() const
 {
     QMatrix4x4 transf = getLocalTransform();
@@ -219,28 +220,6 @@ void GameObject::setLocalPosition(const QVector3D &value)
     localPosition = value;
 }
 
-/*QVector3D GameObject::getPosition() const
-{
-    // position repère world = addition des positions de la hiérarchie
-
-    QVector3D worldPos = getLocalPosition();
-
-    GameObject *go = parent;
-
-    while(go != NULL) {
-
-        worldPos += go->getLocalPosition(); // FAUX si rotation
-
-        go = go->getParent();
-    }
-
-    return worldPos;
-}*/
-
-/*void GameObject::setPosition(const QVector3D &value)
-{
-
-}*/
 
 QQuaternion GameObject::getLocalRotation() const
 {
@@ -252,27 +231,5 @@ void GameObject::setLocalRotation(const QQuaternion &value)
     localRotation = value;
 }
 
-/*QQuaternion GameObject::getRotation() const
-{
-    // rotation repère world = multiplication des rotations de la hiérarchie
-
-    QQuaternion worldRot = getLocalRotation();
-
-    GameObject *go = parent;
-
-    while(go != NULL) {
-
-        worldRot = go->getLocalRotation() * worldRot; // à vérifier !!!
-
-        go = go->getParent();
-    }
-
-    return worldRot;
-}*/
-
-/*void GameObject::setRotation(const QQuaternion &value)
-{
-
-}*/
 
 

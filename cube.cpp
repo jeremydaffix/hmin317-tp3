@@ -6,6 +6,7 @@ Cube::Cube(QVector3D pos, QQuaternion rot, QVector3D sc, QOpenGLShaderProgram* s
 
 }
 
+// création de la géométrie du cube
 void Cube::createGeometry()
 {
     GameObject::createGeometry(); // création enfants
@@ -81,6 +82,8 @@ void Cube::createGeometry()
 
 }
 
+
+// affichage du cube
 void Cube::draw()
 {
     GameObject::draw(); // affichage enfants
