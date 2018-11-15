@@ -43,8 +43,7 @@ RESOURCES += \
 target.path = $$[QT_INSTALL_EXAMPLES]/opengl/cube
 INSTALLS += target
 
-DISTFILES += \
-    Skull decimated.obj
+DISTFILES +=
 
 CONFIG += resources_big
 
