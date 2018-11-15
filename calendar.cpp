@@ -10,10 +10,10 @@ Calendar::Calendar(MainWidget *w1, MainWidget *w2, MainWidget *w3, MainWidget *w
     timerSeason.start(100, this); // 1j = 100ms
 }
 
+
+// un jour est passé
 void Calendar::timerEvent(QTimerEvent *e)
 {
-
-
     // changement de saison :
     // envoi d'un message à chaque fenêtre
 

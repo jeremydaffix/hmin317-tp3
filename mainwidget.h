@@ -51,13 +51,13 @@
 #ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 
-#include "geometryengine.h"
+//#include "geometryengine.h"
 
 
 #include <gamescene.h>
 #include <cube.h>
 #include <terrain.h>
-#include <quadtree.h>
+//#include <quadtree.h>
 #include <plane.h>
 #include <movingcubecomponent.h>
 
@@ -85,8 +85,7 @@ enum DIRECTION {
 
 
 
-class GeometryEngine;
-
+// Classe représentant un widget supportant l'affichage OpenGL.
 class MainWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT
@@ -98,12 +97,15 @@ public:
     void setSeason(int season);
 
 protected:
+
+    // événements entrée utilisateur
     void mousePressEvent(QMouseEvent *e) override;
     void mouseReleaseEvent(QMouseEvent *e) override;
     void keyPressEvent(QKeyEvent* e) override;
     void keyReleaseEvent(QKeyEvent* e) override;
     void timerEvent(QTimerEvent *e) override;
 
+    // événements OpenGL
     void initializeGL() override;
     void resizeGL(int w, int h) override;
     void paintGL() override;
@@ -114,12 +116,11 @@ protected:
 
 private:
 
+    // raccourci pour charger un shader
     void loadShader(QOpenGLShaderProgram &shader, QString vpath, QString fpath);
-
 
     QBasicTimer timer;
     QOpenGLShaderProgram shaderDice, shaderTerrain, shaderTerrainWinter, shaderTerrainSpring, shaderTerrainSummer, shaderTerrainAutumn;
-    GeometryEngine *geometries;
 
     QOpenGLTexture *texture;
 
@@ -140,12 +141,6 @@ private:
     // graph de scene
 
     int idScene = 0;
-
-
-    //QVector3D cameraPosition = QVector3D(0, 0, -10);
-    //QQuaternion cameraRotation = QQuaternion::fromEulerAngles(0, 20, 0);
-
-    //Cube *cube, *cube2;
 
     Terrain *terrain;
 

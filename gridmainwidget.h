@@ -6,6 +6,8 @@
 #include <QMainWindow>
 #include <QGridLayout>
 
+// Classe représentant un widget qui contient un layout grid avec 4 MainWidget
+// au final nous ne l'utilisons pas, car les événements claviers ne sont pas transmis aux MainWidget
 class GridMainWidget : public QWidget
 {
     Q_OBJECT

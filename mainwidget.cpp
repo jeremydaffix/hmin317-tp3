@@ -74,8 +74,6 @@ MainWidget::~MainWidget()
     makeCurrent();
     delete texture;
     //delete heightmap;
-    delete geometries;
-    //delete cube;
     doneCurrent();
 }
 
@@ -99,11 +97,6 @@ void MainWidget::timerEvent(QTimerEvent *)
     GameScene::getInstance()->fixedUpdate();
 
 
-
-    // pour faire tourner la caméra sur elle même
-   // cameraRotation = QQuaternion::fromEulerAngles(0, rotationSpeed, 0) * cameraRotation; // tourner à vitesse constante
-    //qDebug() << cameraRotation.toEulerAngles();
-
     update();
 
 
@@ -118,24 +111,18 @@ void MainWidget::timerEvent(QTimerEvent *)
     switch(movementDirection)
     {
         case DIRECTION::UP:
-            //if(posCam.y() < 5) posCam.setY(posCam.y() + 0.2);
-            //if(posCam.z() > -12) posCam.setZ(posCam.z() - 0.2);
             GameScene::getInstance()->move(QVector3D(0, 0, -0.2));
         break;
 
         case DIRECTION::DOWN:
-            //if(posCam.y() > -5) posCam.setY(posCam.y() - 0.2);
-            //if(posCam.z() < 12) posCam.setZ(posCam.z() + 0.2);
             GameScene::getInstance()->move(QVector3D(0, 0, 0.2));
         break;
 
         case DIRECTION::LEFT:
-            //if(posCam.x() > -12) posCam.setX(posCam.x() - 0.2);
             GameScene::getInstance()->move(QVector3D(-0.2, 0, 0));
         break;
 
         case DIRECTION::RIGHT:
-            //if(posCam.x() < 12) posCam.setX(posCam.x() + 0.2);
             GameScene::getInstance()->move(QVector3D(0.2, 0, 0));
         break;
 
@@ -256,6 +243,7 @@ void MainWidget::initializeGL()
 
 
 
+    // CREATION DU GRAPHE DE SCENE ET DES OBJETS 3D
 
     Cube *cube = new Cube(QVector3D(-0.5, 5, -5.), QQuaternion::fromEulerAngles(0, 20, 0), QVector3D(1.5, 2.0, 1.0));
     Cube *cube2 = new Cube(QVector3D(0.5, 5, -5));
@@ -267,20 +255,12 @@ void MainWidget::initializeGL()
 
     cube2->addComponent(new MovingCubeComponent());
 
-
-    //Plane *plane = new Plane(16, QVector3D(0, -5, -5), QQuaternion::fromEulerAngles(95, 0, 0), QVector3D(1, 1, 1));
-    //GameScene::getInstance()->addChild(plane);
-
-    /*Terrain **/terrain = new Terrain(":/island_heightmap.png", 128, QVector3D(0, -3, 0), QQuaternion::fromEulerAngles(-90, 0, 0), QVector3D(2, 2, 2));
-    //terrain->setShader(&shaderTerrain);
-    terrain->setShader(&shaderTerrainSummer);
+    terrain = new Terrain(":/island_heightmap.png", 128, QVector3D(0, -3, 0), QQuaternion::fromEulerAngles(-90, 0, 0), QVector3D(2, 2, 2));
+    terrain->setShader(&shaderTerrain);
     GameScene::getInstance()->addChild(terrain);
-
 
     GameScene::getInstance()->createGeometry();
 
-
-    //GameScene::getInstance()->setLocalPosition(QVector3D(0, 0, 10));
     GameScene::getInstance()->setLocalRotation(QQuaternion::fromEulerAngles(0, 0, 0));
 }
 
@@ -298,7 +278,7 @@ void MainWidget::initializeGL()
  }
 
 
-//! [3]
+// chargement de tous les shaders
 void MainWidget::initShaders()
 {
     GameScene::setCurrentNumInstance(idScene);
@@ -317,7 +297,7 @@ void MainWidget::initShaders()
 }
 //! [3]
 
-//! [4]
+// chargement des textures utilisées
 void MainWidget::initTextures()
 {
     // Load cube.png image
@@ -370,7 +350,11 @@ void MainWidget::paintGL()
 
     texture->bind();
 
-    GameScene::getInstance()->update();
+
+    // à chaque rafraîchissement :
+    // on parse l'arbre du graphe de scène pour appeler les draw() de tous les objets (GameObject) à afficher
+
+    GameScene::getInstance()->update(); // pour les components, EN COURS DE DEV
     GameScene::getInstance()->draw();
 }
 
