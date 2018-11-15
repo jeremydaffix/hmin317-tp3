@@ -13,7 +13,8 @@ SOURCES += main.cpp \
     component.cpp \
     movingcubecomponent.cpp \
     gridmainwidget.cpp \
-    calendar.cpp
+    calendar.cpp \
+    objet3d.cpp
 
 SOURCES += \
     mainwidget.cpp
@@ -29,7 +30,8 @@ HEADERS += \
     component.h \
     movingcubecomponent.h \
     gridmainwidget.h \
-    calendar.h
+    calendar.h \
+    objet3d.h
 
 RESOURCES += \
     shaders.qrc \
