@@ -16,9 +16,9 @@
 // Tous les objets de la scène sont des GameObject, de la scène / caméra, aux
 // objets 3D, en passant par les sprites.
 // La classe mère GameObject contient tout ce qui est commun à ces différents objets du graph de scène :
-// changements de repères, calcul des positions / rotations / tailles, modification de l'abre du graphe de scène
+// changements de repères, calcul des positions / rotations / tailles, modification de l'arbre du graphe de scène
 // (ajout / suppression d'enfants,...), déplacements dans le bon repère, gestion des composants,...
-// L'abre du graph de scène est implémenté par l'intermédiaire d'un Pattern composite : chaque GameObject a
+// L'arbre du graph de scène est implémenté par l'intermédiaire d'un Pattern composite : chaque GameObject a
 // un parent, et une liste d'enfants, de type GameObject.
 //
 // Chaque classe héritée de GameObject devra notamment redéfinir 2 méthodes :

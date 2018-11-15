@@ -255,7 +255,8 @@ void MainWidget::initializeGL()
 
     cube2->addComponent(new MovingCubeComponent());
 
-    terrain = new Terrain(":/island_heightmap.png", 128, QVector3D(0, -3, 0), QQuaternion::fromEulerAngles(-90, 0, 0), QVector3D(2, 2, 2));
+    terrain = new Terrain(":/island_heightmap.png",
+                          128, QVector3D(0, -3, 0), QQuaternion::fromEulerAngles(-90, 0, 0), QVector3D(2, 2, 2));
     terrain->setShader(&shaderTerrain);
     GameScene::getInstance()->addChild(terrain);
 
@@ -365,7 +366,6 @@ void MainWidget::paintGL()
 void MainWidget::setSeason(int season)
 {
     qDebug() << "Scene " << idScene << " : SEASON " << season;
-    //update();
 
     if(season == 0) terrain->setShader(&shaderTerrainWinter);
     else if(season == 1) terrain->setShader(&shaderTerrainSpring);
