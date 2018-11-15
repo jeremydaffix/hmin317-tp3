@@ -271,8 +271,9 @@ void MainWidget::initializeGL()
     //Plane *plane = new Plane(16, QVector3D(0, -5, -5), QQuaternion::fromEulerAngles(95, 0, 0), QVector3D(1, 1, 1));
     //GameScene::getInstance()->addChild(plane);
 
-    Terrain *terrain = new Terrain(":/island_heightmap.png", 128, QVector3D(0, -3, 0), QQuaternion::fromEulerAngles(-90, 0, 0), QVector3D(2, 2, 2));
-    terrain->setShader(&shaderTerrain);
+    /*Terrain **/terrain = new Terrain(":/island_heightmap.png", 128, QVector3D(0, -3, 0), QQuaternion::fromEulerAngles(-90, 0, 0), QVector3D(2, 2, 2));
+    //terrain->setShader(&shaderTerrain);
+    terrain->setShader(&shaderTerrainSummer);
     GameScene::getInstance()->addChild(terrain);
 
 
@@ -283,49 +284,33 @@ void MainWidget::initializeGL()
     GameScene::getInstance()->setLocalRotation(QQuaternion::fromEulerAngles(0, 0, 0));
 }
 
+
+// méthode pour simplifier le chargement d'un shader
+ void MainWidget::loadShader(QOpenGLShaderProgram &shader, QString vpath, QString fpath)
+ {
+     // Compile vertex shader
+     if (!shader.addShaderFromSourceFile(QOpenGLShader::Vertex, vpath))
+         close();
+
+     // Compile fragment shader
+     if (!shader.addShaderFromSourceFile(QOpenGLShader::Fragment, fpath))
+         close();
+ }
+
+
 //! [3]
 void MainWidget::initShaders()
 {
     GameScene::setCurrentNumInstance(idScene);
 
 
-    // Compile vertex shader
-    if (!shaderDice.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/vshader.glsl"))
-        close();
+    loadShader(shaderDice, ":/vshader.glsl", ":/fshader.glsl");
+    loadShader(shaderTerrain, ":/vshader_color.glsl", ":/fshader_color.glsl");
 
-    // Compile fragment shader
-    if (!shaderDice.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/fshader.glsl"))
-        close();
-
-
-    // Link shader pipeline
-    if (!shaderDice.link())
-        close();
-
-    // Bind shader pipeline for use
-    if (!shaderDice.bind())
-        close();
-
-
-
-
-    // Compile vertex shader
-    if (!shaderTerrain.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/vshader_color.glsl"))
-        close();
-
-    // Compile fragment shader
-    if (!shaderTerrain.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/fshader_color.glsl"))
-        close();
-
-
-    // Link shader pipeline
-    if (!shaderTerrain.link())
-        close();
-
-    // Bind shader pipeline for use
-    /*-if (!shaderTerrain.bind())
-        close();*/
-
+    loadShader(shaderTerrainWinter, ":/vshader_winter.glsl", ":/fshader_color.glsl");
+    loadShader(shaderTerrainSpring, ":/vshader_spring.glsl", ":/fshader_color.glsl");
+    loadShader(shaderTerrainSummer, ":/vshader_summer.glsl", ":/fshader_color.glsl");
+    loadShader(shaderTerrainAutumn, ":/vshader_autumn.glsl", ":/fshader_color.glsl");
 
 
     GameScene::getInstance()->setDefaultShader(&shaderDice);
@@ -388,3 +373,21 @@ void MainWidget::paintGL()
     GameScene::getInstance()->update();
     GameScene::getInstance()->draw();
 }
+
+
+
+
+
+void MainWidget::setSeason(int season)
+{
+    qDebug() << "Scene " << idScene << " : SEASON " << season;
+    //update();
+
+    if(season == 0) terrain->setShader(&shaderTerrainWinter);
+    else if(season == 1) terrain->setShader(&shaderTerrainSpring);
+    else if(season == 2) terrain->setShader(&shaderTerrainSummer);
+    else terrain->setShader(&shaderTerrainAutumn);
+
+    update();
+}
+

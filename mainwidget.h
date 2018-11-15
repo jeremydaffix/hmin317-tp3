@@ -95,6 +95,8 @@ public:
     explicit MainWidget(int _fps = 60, int _idScene = 0, QWidget *parent = 0);
     ~MainWidget();
 
+    void setSeason(int season);
+
 protected:
     void mousePressEvent(QMouseEvent *e) override;
     void mouseReleaseEvent(QMouseEvent *e) override;
@@ -109,9 +111,14 @@ protected:
     void initShaders();
     void initTextures();
 
+
 private:
+
+    void loadShader(QOpenGLShaderProgram &shader, QString vpath, QString fpath);
+
+
     QBasicTimer timer;
-    QOpenGLShaderProgram shaderDice, shaderTerrain;
+    QOpenGLShaderProgram shaderDice, shaderTerrain, shaderTerrainWinter, shaderTerrainSpring, shaderTerrainSummer, shaderTerrainAutumn;
     GeometryEngine *geometries;
 
     QOpenGLTexture *texture;
@@ -139,6 +146,13 @@ private:
     //QQuaternion cameraRotation = QQuaternion::fromEulerAngles(0, 20, 0);
 
     //Cube *cube, *cube2;
+
+    Terrain *terrain;
+
+
+
+//public slots:
+//    void setSeason(int season);
 
 };
 

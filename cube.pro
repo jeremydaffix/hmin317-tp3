@@ -12,7 +12,9 @@ SOURCES += main.cpp \
     gamescene.cpp \
     model3d.cpp \
     component.cpp \
-    movingcubecomponent.cpp
+    movingcubecomponent.cpp \
+    gridmainwidget.cpp \
+    calendar.cpp
 
 SOURCES += \
     mainwidget.cpp \
@@ -29,7 +31,9 @@ HEADERS += \
     gamescene.h \
     model3d.h \
     component.h \
-    movingcubecomponent.h
+    movingcubecomponent.h \
+    gridmainwidget.h \
+    calendar.h
 
 RESOURCES += \
     shaders.qrc \
@@ -42,3 +46,5 @@ INSTALLS += target
 DISTFILES +=
 
 CONFIG += resources_big
+
+FORMS +=

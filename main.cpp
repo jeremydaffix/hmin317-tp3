@@ -49,12 +49,17 @@
 ****************************************************************************/
 
 #include <QApplication>
+#include <QGridLayout>
 #include <QLabel>
 #include <QSurfaceFormat>
 
+
 #ifndef QT_NO_OPENGL
+//#include <gridmainwidget.h>
+#include "calendar.h"
 #include "mainwidget.h"
 #endif
+
 
 int main(int argc, char *argv[])
 {
@@ -68,16 +73,22 @@ int main(int argc, char *argv[])
     app.setApplicationVersion("0.1");
 #ifndef QT_NO_OPENGL
 
-   MainWidget widget;
-   widget.show();
+   /*MainWidget widget;
+   widget.show();*/
 
 
-    /*MainWidget widget1(1, 0), widget10(10, 1), widget100(100, 2), widget1000(1000, 3);
+    MainWidget widget1(1, 0), widget10(10, 1), widget100(100, 2), widget1000(1000, 3); // 4 fenetres
+
+    Calendar calendar(&widget1, &widget10, &widget100, &widget1000); // timer pour les saisons
 
     widget1.show();
     widget10.show();
     widget100.show();
-    widget1000.show();*/
+    widget1000.show();
+
+
+    //GridMainWidget mw; // fenetre unique pour afficher les 4 sous-fenetres, avec un qgridlayout !
+    // PROBLEME : events keyboards pas passés aux mainwidget fils
 
 
 #else
