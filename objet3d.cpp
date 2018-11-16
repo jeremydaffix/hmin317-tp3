@@ -78,15 +78,24 @@ void Objet3d:: createGeometry(){
         indices.push_back(i);
     }
 
+<<<<<<< HEAD
     //VBO0
     arrayBuf.bind();
     arrayBuf.allocate(sommet.data(),sommet.size()* sizeof(QVector3D));
+=======
+  /*  arrayBuf.bind();
+    arrayBuf.allocate(vertices, 24 * sizeof(VertexData));
+>>>>>>> 115c84a4d8b599f5b9b16597b413e9b8895a6aea
 
     //VBO1
     taille = indices.size();
     indexBuf.bind();
+<<<<<<< HEAD
     indexBuf.allocate(indices.data(), indices.size() * sizeof(GLushort));
 
+=======
+    indexBuf.allocate(indices, 34 * sizeof(GLushort));*/
+>>>>>>> 115c84a4d8b599f5b9b16597b413e9b8895a6aea
 }
 void Objet3d::draw(){
     GameObject::draw(); // affichage enfants
