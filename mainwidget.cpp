@@ -251,6 +251,7 @@ void MainWidget::initializeGL()
 
     GameScene::getInstance()->addChild(cube);
     GameScene::getInstance()->addChild(cube2);
+    GameScene::getInstance()->re
     cube2->addChild(cube3);
 
     cube2->addComponent(new MovingCubeComponent());

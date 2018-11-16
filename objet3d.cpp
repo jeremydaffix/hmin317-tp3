@@ -50,6 +50,7 @@ void Objet3d:: createGeometry(){
             normalIndices.push_back(normalIndex[0]);
             normalIndices.push_back(normalIndex[1]);
             normalIndices.push_back(normalIndex[2]);
+        }
 
         // else : parse lineHeader
 
