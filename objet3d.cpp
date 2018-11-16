@@ -6,15 +6,16 @@ Objet3d::Objet3d(QVector3D pos, QQuaternion rot, QVector3D sc, QOpenGLShaderProg
 
 }
 
-void Objet3d:: createGeometry(){
+bool Objet3d:: loadobj(vector <QVector3D> & out_vertices, vector <QVector3D> & out_normals){
 
-    std::vector< unsigned int > vertexIndices, normalIndices;
-    std::vector<QVector3D> temp_vertices;
-    std::vector< QVector3D> temp_normals;
+    vector< unsigned int > vertexIndices, normalIndices;
+    vector<QVector3D> temp_vertices;
+    vector< QVector3D> temp_normals;
 
     FILE * file = fopen(path, "r");
     if( file == NULL ){
         printf("Impossible to open the file !\n");
+        return false;
     }
 
     while( 1 ){
@@ -51,16 +52,79 @@ void Objet3d:: createGeometry(){
             normalIndices.push_back(normalIndex[1]);
             normalIndices.push_back(normalIndex[2]);
         }
+    }
+    for( unsigned int i=0; i < vertexIndices.size(); i++ ){
+        unsigned int vertexIndex = vertexIndices[i];
+        QVector3D vertex = temp_vertices[ vertexIndex-1 ];
+        out_vertices.push_back(vertex);
+    }
+    for( unsigned int i=0; i < normalIndices.size(); i++ ){
+        unsigned int normalIndex = normalIndices[i];
+        QVector3D normals = temp_normals[ normalIndex-1 ];
+        out_normals.push_back(normals);
+    }
 
-        // else : parse lineHeader
+    return true;
+}
 
+void Objet3d:: createGeometry(){
+
+    vector<QVector3D> sommet;
+    vector<QVector3D> normals;
+    vector<GLushort> indices;
+    vector<int> faces;
+    bool res = loadobj(sommet,normals);
+    for(int i = 0; i < sommet.size(); i++){
+        indices.push_back(i);
+    }
+
+    //VBO0
     arrayBuf.bind();
-    arrayBuf.allocate(vertices, 24 * sizeof(VertexData));
+    arrayBuf.allocate(sommet.data(),sommet.size()* sizeof(QVector3D));
 
-    // Transfer index data to VBO 1
+    //VBO1
+    taille = indices.size();
     indexBuf.bind();
-    indexBuf.allocate(indices, 34 * sizeof(GLushort));
+    indexBuf.allocate(indices.data(), indices.size() * sizeof(GLushort));
+
 }
 void Objet3d::draw(){
+    GameObject::draw(); // affichage enfants
 
+    //qDebug() << "DRAW CUBE " << localPosition << " " << localRotation;
+
+    if(shader == NULL) shader = GameScene::getInstance()->getDefaultShader();
+
+    if (!shader->bind())
+            return;
+
+    QMatrix4x4 matrix = getTransform(); // transform dans le repère monde
+
+    shader->setUniformValue("mvp_matrix", GameScene::getInstance()->getProjection() * matrix);
+
+
+
+    // Tell OpenGL which VBOs to use
+    arrayBuf.bind();
+    indexBuf.bind();
+
+    // Offset for position
+    quintptr offset = 0;
+
+    // Tell OpenGL programmable pipeline how to locate vertex position data
+    int vertexLocation = shader->attributeLocation("a_position");
+
+    shader->enableAttributeArray(vertexLocation);
+    shader->setAttributeBuffer(vertexLocation, GL_FLOAT, offset, 3, sizeof(VertexData));
+
+    // Offset for texture coordinate
+    offset += sizeof(QVector3D);
+
+    // Tell OpenGL programmable pipeline how to locate vertex texture coordinate data
+    int texcoordLocation = shader->attributeLocation("a_texcoord");
+    shader->enableAttributeArray(texcoordLocation);
+    shader->setAttributeBuffer(texcoordLocation, GL_FLOAT, offset, 2, sizeof(VertexData));
+
+    // Draw cube geometry using indices from VBO 1
+    glDrawElements(GL_TRIANGLES, taille, GL_UNSIGNED_SHORT, 0);
 }
