@@ -16,7 +16,7 @@ public:
     // les 2 méthodes à redéfinir et spécifiques à la création / affichage des sommets de l'objet !
     void createGeometry();
     void draw();
-    string path;
+    const char* path;
 };
 
 
