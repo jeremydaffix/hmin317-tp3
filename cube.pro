@@ -35,7 +35,8 @@ HEADERS += \
 
 RESOURCES += \
     shaders.qrc \
-    textures.qrc
+    textures.qrc \
+    obj.qrc
 
 # install
 target.path = $$[QT_INSTALL_EXAMPLES]/opengl/cube

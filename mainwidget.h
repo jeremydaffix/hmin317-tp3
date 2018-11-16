@@ -56,6 +56,7 @@
 
 #include <gamescene.h>
 #include <cube.h>
+#include<objet3d.h>
 #include <terrain.h>
 //#include <quadtree.h>
 #include <plane.h>
@@ -120,7 +121,7 @@ private:
     void loadShader(QOpenGLShaderProgram &shader, QString vpath, QString fpath);
 
     QBasicTimer timer;
-    QOpenGLShaderProgram shaderDice, shaderTerrain, shaderTerrainWinter, shaderTerrainSpring, shaderTerrainSummer, shaderTerrainAutumn;
+    QOpenGLShaderProgram shaderDice, shaderTerrain, shaderTerrainWinter, shaderTerrainSpring, shaderTerrainSummer, shaderTerrainAutumn, shaderTest;
 
     QOpenGLTexture *texture;
 
@@ -143,7 +144,6 @@ private:
     int idScene = 0;
 
     Terrain *terrain;
-
 
 
 //public slots:

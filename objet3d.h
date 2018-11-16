@@ -3,6 +3,8 @@
 
 #include <model3d.h>
 #include <string>
+#include <QFile>
+#include <QOpenGLBuffer>
 using namespace std;
 
 //la classe qui charge les objets 3d
@@ -26,6 +28,7 @@ public:
     bool loadobj(vector <QVector3D> & out_vertices, vector <QVector3D> & out_normals);
     const char* path;
     int taille;
+    QOpenGLBuffer VBO;
 };
 
 

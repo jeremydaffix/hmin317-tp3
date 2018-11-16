@@ -248,9 +248,14 @@ void MainWidget::initializeGL()
     Cube *cube = new Cube(QVector3D(-0.5, 5, -5.), QQuaternion::fromEulerAngles(0, 20, 0), QVector3D(1.5, 2.0, 1.0));
     Cube *cube2 = new Cube(QVector3D(0.5, 5, -5));
     Cube *cube3 = new Cube(QVector3D(2, 2, 0), QQuaternion(), QVector3D(1, 1, 1));
+    Objet3d *test = new Objet3d(QVector3D(2, 2, 0), QQuaternion(), QVector3D(1, 1, 1));
+    test->path = ":/pillow_low.obj";
+    test->setShader(&shaderTest);
 
-    GameScene::getInstance()->addChild(cube);
-    GameScene::getInstance()->addChild(cube2);
+
+   // GameScene::getInstance()->addChild(cube);
+    GameScene::getInstance()->addChild(test);
+   // GameScene::getInstance()->addChild(cube2);
     cube2->addChild(cube3);
 
     cube2->addComponent(new MovingCubeComponent());
@@ -286,6 +291,7 @@ void MainWidget::initShaders()
 
 
     loadShader(shaderDice, ":/vshader.glsl", ":/fshader.glsl");
+    loadShader(shaderTest, ":/vshader.glsl", ":/fshader_Objet.glsl");
     loadShader(shaderTerrain, ":/vshader_color.glsl", ":/fshader_color.glsl");
 
     loadShader(shaderTerrainWinter, ":/vshader_winter.glsl", ":/fshader_color.glsl");
@@ -295,6 +301,7 @@ void MainWidget::initShaders()
 
 
     GameScene::getInstance()->setDefaultShader(&shaderDice);
+
 }
 //! [3]
 
