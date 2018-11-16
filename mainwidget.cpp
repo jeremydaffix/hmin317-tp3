@@ -248,14 +248,14 @@ void MainWidget::initializeGL()
     Cube *cube = new Cube(QVector3D(-0.5, 5, -5.), QQuaternion::fromEulerAngles(0, 20, 0), QVector3D(1.5, 2.0, 1.0));
     Cube *cube2 = new Cube(QVector3D(0.5, 5, -5));
     Cube *cube3 = new Cube(QVector3D(2, 2, 0), QQuaternion(), QVector3D(1, 1, 1));
-    Objet3d *test = new Objet3d(QVector3D(2, 2, 0), QQuaternion(), QVector3D(1, 1, 1));
-    test->path = ":/pillow_low.obj";
-    test->setShader(&shaderTest);
+   // Objet3d *test = new Objet3d(QVector3D(2, 2, 0), QQuaternion(), QVector3D(1, 1, 1));
+   // test->path = ":/pillow_low.obj";
+   // test->setShader(&shaderTest);
 
 
-   // GameScene::getInstance()->addChild(cube);
-    GameScene::getInstance()->addChild(test);
-   // GameScene::getInstance()->addChild(cube2);
+    GameScene::getInstance()->addChild(cube);
+    //GameScene::getInstance()->addChild(test);
+    GameScene::getInstance()->addChild(cube2);
     cube2->addChild(cube3);
 
     cube2->addComponent(new MovingCubeComponent());
